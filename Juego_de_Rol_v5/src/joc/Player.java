@@ -35,8 +35,15 @@ public abstract class Player {
     }
     
     
-    public void attack(Player p)
+    public void attack(Player p) throws MiExcepcion
     {
+        if (p == this)
+        {
+            
+            throw new MiExcepcion("Un jugador no puede atacarse a si mismo!");
+            
+        }
+        
         
             for (Item item : this.items) 
             {
@@ -83,23 +90,30 @@ public abstract class Player {
             
             
         }
-        p.hit(this.attackPoints);
-        System.out.println(this.name + " está atacando a " + p.name + " con " + this.attackPoints + " puntos de ataque." +  p.name + " se defiende quedandose con " + p.defensePoints + " puntos de defensa y se queda con " + p.life + " puntos de vida.");
+        p.hit(this.getAttackPoints());
+        System.out.println(this.getName() + " está atacando a " + p.getName() + " con " + this.getAttackPoints() + " puntos de ataque." +  p.getName() + " se defiende quedandose con " + p.getDefensePoints() + " puntos de defensa y se queda con " + p.getLife() + " puntos de vida.");
         
     }
     
-    protected void hit(int attack)
+    protected void hit(int attack) throws MiExcepcion
     {
         
         
-        if (attack > this.defensePoints)
+        if (this.getLife() == 0)
         {
             
-            int attack_new = attack - this.defensePoints;
+            throw new MiExcepcion("No se puede atacar a un jugador muerto.");
+            
+        }
+        
+        if (attack >= this.defensePoints)
+        {
+            
+            int attack_new = attack - this.defensePoints; 
             this.setDefensePoints(0);
                 
-            this.setLife(this.life - attack_new);
-            if (this.life < 0)
+            this.setLife(Player.life - attack_new);  
+            if (Player.life < 0)
             {
 
                 this.setLife(0);
@@ -107,26 +121,18 @@ public abstract class Player {
 
             }
         }
-        else if (attack < this.defensePoints)
+        else if (attack < this.defensePoints && Player.life > 0)
         {
-            
 
             this.setDefensePoints(this.getDefensePoints() - attack);
             
-            if (this.life < 0)
-            {
-
-                this.setLife(0);
-                System.out.println("El jugador " + this.name + " ha muerto.");
-
-            }
         }
                 
         
         
     }
     
-    public void add(Team t)
+    public void add(Team t) throws MiExcepcion
     {
         
         this.setVeces_equipo(this.getVeces_equipo() + 1);
@@ -232,7 +238,7 @@ public abstract class Player {
      * @return the life
      */
     public int getLife() {
-        return life;
+        return Player.life;
     }
 
     /**

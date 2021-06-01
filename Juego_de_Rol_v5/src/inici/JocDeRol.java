@@ -245,8 +245,19 @@ public class JocDeRol {
                                     
                                 }
                         
-                        jugador.add(eq);
-                        eq.add(jugador);
+                        try
+                        {
+                            
+                            jugador.add(eq);
+                            eq.add(jugador);
+                            
+                        }
+                        catch(MiExcepcion ex)
+                                {
+                                    
+                                    
+                                }
+                        
                         
                     }
                     else if ("1.1.5".equals(respuesta_3))
@@ -409,8 +420,19 @@ public class JocDeRol {
                                     
                                 }
                         
-                        eq.add(jugador);
-                        jugador.add(eq);
+                        try
+                        {
+                            
+                            eq.add(jugador);
+                            jugador.add(eq);
+                            
+                        }
+                        catch(MiExcepcion ex)
+                                {
+                                    
+                                    
+                                }
+                        
                         
                         
                     }
@@ -567,8 +589,10 @@ public class JocDeRol {
                 Jugadores.add(Passif);
                 Jugadores.add(Jorge);
                 Jugadores.add(Jesus);
+                Player Jugador1_atras = new Human();
+                Player Jugador2_atras = new Human();
                 
-                while (Jugadores.size() != 1)
+                while (Jugadores.size() >= 1)
                 {
                     
                     
@@ -579,8 +603,7 @@ public class JocDeRol {
                         entrada  = scanner.nextLine();
                         System.out.println(entrada);
                         
-                    Player Jugador1_atras = new Human();
-                    Player Jugador2_atras = new Human();
+                    
                     boolean aprobado = false;
                     System.out.println("Eligiendo jugador número ||     1     ||");
                     
@@ -594,6 +617,9 @@ public class JocDeRol {
                     System.out.println("...");
                     Player Jugador2 = Jugadores.get(random.nextInt(Jugadores.size()));
                      System.out.println("JUGADOR ELEGIDO!!");
+                     
+                         System.out.println("-----");
+                         System.out.println(Jugadores);
                     
                     if (Jugador1_atras != Jugador1 && Jugador2_atras != Jugador2 && Jugador1 != Jugador2)
                     {
@@ -601,7 +627,6 @@ public class JocDeRol {
                         aprobado = true;
                         
                     }
-                    
                     
                     Jugador1_atras = Jugador1;
                     Jugador2_atras = Jugador2;
@@ -613,28 +638,47 @@ public class JocDeRol {
                         if (Jugador1.getLife() == 0)
                         {
                             
-                            System.out.println("El jugador 1 está muerto");
                             Jugadores.remove(Jugador1);
                             
                         }
-                        else if (Jugador2.getLife() == 0)
+                        if (Jugador2.getLife() == 0)
                         {
-                            
-                            System.out.println("El jugador 2 está muerto");
+
                             Jugadores.remove(Jugador2);
                             
                         }
-                        System.out.println(Jugador1);
-                        System.out.println(Jugador2);
-                        Jugador1.attack(Jugador2);
-                        System.out.println(Jugador1);
-                        System.out.println(Jugador2);
-                        if (Jugadores.size() == 1)
+                        if (Jugadores.size() >= 2)
+                        {
+                            
+                            try
+                            {
+                                Jugador1.attack(Jugador2);
+                                System.out.println(Jugador1.getLife());
+                                System.out.println("VIDA JUGADOR 2");
+                                System.out.println(Jugador2.getLife());
+                                if (Jugador2.getLife() > 0)
+                                {
+                                    Jugador2.attack(Jugador1);
+                                }
+                                
+                                
+                            }
+                            catch(MiExcepcion ex)
+                            {
+
+                                
+                                
+                            }
+                            
+                            
+                        }
+                        else if (Jugadores.size() == 1)
                         {
                             
                             System.out.println("El jugador " + Jugadores.get(0) + " ha ganado.");
                             
                         }
+                        
                     }
                     else
                     {
@@ -681,7 +725,7 @@ public class JocDeRol {
     
     static public void provaFase()
     {
-        
+        /*
         // CREACION CLASES
         System.out.println("Va a crearse un Humano");
         Human Byllorge = new Human("Byllorge", 20, 20, 200);
@@ -704,7 +748,6 @@ public class JocDeRol {
         PassiveSky.add(SunGlasses);
         PassiveSky.add(Bazooka);
         System.out.println(PassiveSky);
-        PassiveSky.attack(MrMacia);
         System.out.println(PassiveSky);
         System.out.println(MrMacia);
 
@@ -724,7 +767,7 @@ public class JocDeRol {
         System.out.println("-----------");
         PeppoClown.listar();
         // PRINT DEL ITEM GAFAS
-        System.out.println(SunGlasses);
+        System.out.println(SunGlasses); */
         
     }
     

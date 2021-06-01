@@ -19,24 +19,38 @@ public class Warrior extends Human{
         System.out.println("He creado un Guerrero");
     }
     
-    protected void hit(int attack)
+    protected void hit(int attack) 
     {
         
         if(attack < 5)
         {
-            
             attack = 0;
-            this.setLife(this.getLife() - attack);
-            
         }
-        else
+        
+        
+        else if (attack >= this.getDefensePoints())
         {
             
-           int attack_new = attack - this.getDefensePoints();
-           this.setLife(this.getLife() - attack_new);     
+            int attack_new = attack - this.getDefensePoints();
+            this.setDefensePoints(0);
                 
-                
+            this.setLife(this.getLife() - attack_new);
+            if (this.getLife() < 0)
+            {
+
+                this.setLife(0);
+                System.out.println("El jugador " + this.getName() + " ha muerto.");
+
+            }
         }
+        else if (attack < this.getDefensePoints() && this.getLife() > 0)
+        {
+            
+
+            this.setDefensePoints(this.getDefensePoints() - attack);
+            
+        }
+
         
     }
     

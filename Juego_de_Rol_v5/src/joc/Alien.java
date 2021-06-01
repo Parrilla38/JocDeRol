@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,7 +22,7 @@ public class Alien extends Player{
     }
     
     @Override
-    public void attack(Player p)
+    public void attack(Player p) throws MiExcepcion
     {
         
         
@@ -61,9 +61,6 @@ public class Alien extends Player{
             p.hit(this.getAttackPoints());
             
         }
-        
-        System.out.println(this.getName() + " está atacando a " + p.getName() + " con " + this.getAttackPoints() + " puntos de ataque." +  p.getName() + " se defiende quedandose con " + p.getDefensePoints() + " puntos de defensa y se queda con " + p.getLife() + " puntos de vida.");
-        
         
     }
 }
