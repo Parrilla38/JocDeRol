@@ -9,9 +9,14 @@ package joc;
  *
  * @author Jesús Parra <Jesús Parra>
  */
-public class MiExcepcion extends Exception{
-     
-    public MiExcepcion(String message) {
+public class NoPerteneceExcep extends Exception{
+    
+    public NoPerteneceExcep(String message) {
         super(message);
     }
+
+    public NoPerteneceExcep() {
+        super("El jugador no pertenece al Equipo");
+    }
+    
 }

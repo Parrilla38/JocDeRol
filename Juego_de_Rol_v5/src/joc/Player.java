@@ -17,7 +17,7 @@ public abstract class Player {
     private String name;
     private int attackPoints;
     private int defensePoints;
-    static private int life = 100;
+    private int life = 100;
     private int veces_equipo = 0;
     private int contador = 0;
     
@@ -35,14 +35,21 @@ public abstract class Player {
     }
     
     
-    public void attack(Player p) throws MiExcepcion
+    public void attack(Player p) throws JugadorMuertoExcep
     {
-        if (p == this)
+        if (this.getLife() <= 0)
         {
             
-            throw new MiExcepcion("Un jugador no puede atacarse a si mismo!");
+            throw new JugadorMuertoExcep("El jugador " + this.getName() + "está muerto y no puede ser atacado.");
             
         }
+        if (p.getLife() <= 0)
+        {
+            
+            throw new JugadorMuertoExcep("El jugador " + p.getName() + "está muerto y no puede ser atacado.");
+            
+        }
+
         
         
             for (Item item : this.items) 
@@ -95,16 +102,10 @@ public abstract class Player {
         
     }
     
-    protected void hit(int attack) throws MiExcepcion
+    protected void hit(int attack)
     {
         
         
-        if (this.getLife() == 0)
-        {
-            
-            throw new MiExcepcion("No se puede atacar a un jugador muerto.");
-            
-        }
         
         if (attack >= this.defensePoints)
         {
@@ -112,8 +113,8 @@ public abstract class Player {
             int attack_new = attack - this.defensePoints; 
             this.setDefensePoints(0);
                 
-            this.setLife(Player.life - attack_new);  
-            if (Player.life < 0)
+            this.setLife(this.life - attack_new);  
+            if (this.life < 0)
             {
 
                 this.setLife(0);
@@ -121,7 +122,7 @@ public abstract class Player {
 
             }
         }
-        else if (attack < this.defensePoints && Player.life > 0)
+        else if (attack < this.defensePoints && this.life > 0)
         {
 
             this.setDefensePoints(this.getDefensePoints() - attack);
@@ -132,18 +133,32 @@ public abstract class Player {
         
     }
     
-    public void add(Team t) throws MiExcepcion
+    public void add(Team t) throws JugadorRepetidoExcep
     {
         
-        this.setVeces_equipo(this.getVeces_equipo() + 1);
-        Teams.add(t);
-        t.add(this);
+        if (!Teams.contains(t))
+        {
+            
+            this.setVeces_equipo(this.getVeces_equipo() + 1);
+            Teams.add(t);
+            t.add(this);
+            
+        }
+        else
+        {
+            
+            throw new JugadorRepetidoExcep("El Equipo " + t.getName() + " ya tiene al jugador " + this.getName());
+            
+        }
+        
         
           
     }
     
-    public void add(Item i)
+    public void add(Item i) throws ObjetoRepetidoExcep
     {
+        
+        if(!items.includes(i))
         this.items[this.getContador()] = i;
         this.setContador(this.getContador() + 1);
     }
@@ -155,10 +170,24 @@ public abstract class Player {
         this.setContador(this.getContador() + 1);
     }
     
-    public void remove(Team t)
+    public void remove(Team t) throws NoPerteneceExcep
     {
         
-        this.remove(t);
+        if (Teams.contains(t))
+        {
+            
+            this.remove(t);
+            t.remove(this);
+            
+        }
+        else
+        {
+            
+            throw new NoPerteneceExcep("El jugador " + this.getName() + " no pertenece a este equipo.");
+            
+        }
+        
+        
                 
     }
     
@@ -238,7 +267,7 @@ public abstract class Player {
      * @return the life
      */
     public int getLife() {
-        return Player.life;
+        return this.life;
     }
 
     /**

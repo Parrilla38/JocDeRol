@@ -589,8 +589,8 @@ public class JocDeRol {
                 Jugadores.add(Passif);
                 Jugadores.add(Jorge);
                 Jugadores.add(Jesus);
-                Player Jugador1_atras = new Human();
-                Player Jugador2_atras = new Human();
+                boolean continuar = true;
+                
                 
                 while (Jugadores.size() >= 1)
                 {
@@ -605,79 +605,24 @@ public class JocDeRol {
                         
                     
                     boolean aprobado = false;
-                    System.out.println("Eligiendo jugador número ||     1     ||");
-                    
-                    System.out.println("...");
+
+                        
                     Player Jugador1 = Jugadores.get(random.nextInt(Jugadores.size()));
-                    System.out.println("JUGADOR ELEGIDO!!");
-                    
-                    
-                    System.out.println("Eligiendo jugador número ||     2     ||");
-                    
-                    System.out.println("...");
                     Player Jugador2 = Jugadores.get(random.nextInt(Jugadores.size()));
-                     System.out.println("JUGADOR ELEGIDO!!");
-                     
-                         System.out.println("-----");
-                         System.out.println(Jugadores);
                     
-                    if (Jugador1_atras != Jugador1 && Jugador2_atras != Jugador2 && Jugador1 != Jugador2)
+                    
+                    
+                    
+                    
+                    
+                    if (Jugador1 != Jugador2)
                     {
                         
                         aprobado = true;
-                        
-                    }
-                    
-                    Jugador1_atras = Jugador1;
-                    Jugador2_atras = Jugador2;
-                    
+                        System.out.println("JUGADOR 1 : " + Jugador1.getName());
+                        System.out.println("----------------------------------------");
+                        System.out.println("JUGADOR 2 : " + Jugador2.getName());
 
-                    if (aprobado == true)
-                    {
-                        
-                        if (Jugador1.getLife() == 0)
-                        {
-                            
-                            Jugadores.remove(Jugador1);
-                            
-                        }
-                        if (Jugador2.getLife() == 0)
-                        {
-
-                            Jugadores.remove(Jugador2);
-                            
-                        }
-                        if (Jugadores.size() >= 2)
-                        {
-                            
-                            try
-                            {
-                                Jugador1.attack(Jugador2);
-                                System.out.println(Jugador1.getLife());
-                                System.out.println("VIDA JUGADOR 2");
-                                System.out.println(Jugador2.getLife());
-                                if (Jugador2.getLife() > 0)
-                                {
-                                    Jugador2.attack(Jugador1);
-                                }
-                                
-                                
-                            }
-                            catch(MiExcepcion ex)
-                            {
-
-                                
-                                
-                            }
-                            
-                            
-                        }
-                        else if (Jugadores.size() == 1)
-                        {
-                            
-                            System.out.println("El jugador " + Jugadores.get(0) + " ha ganado.");
-                            
-                        }
                         
                     }
                     else
@@ -685,10 +630,96 @@ public class JocDeRol {
                         
                         Jugador1 = Jugadores.get(random.nextInt(Jugadores.size()));
                         Jugador2 = Jugadores.get(random.nextInt(Jugadores.size()));
+                        
+                        
                     }
+                    
+                    
 
-                     }
-                     while(!entrada.equals("")); 
+                    if (aprobado == true)
+                    {
+                        
+                        if (Jugador1.getLife() <= 0)
+                        {
+                            
+                            Jugadores.remove(Jugador1);
+                            
+                        }
+                        if (Jugador2.getLife() <= 0)
+                        {
+
+                            Jugadores.remove(Jugador2);
+                            
+                        }
+                        if (Jugadores.size() > 1)
+                        {
+                            
+                            try
+                            {
+                                
+                                if (Jugador1.getLife() > 0)
+                                {
+                                    
+                                     Jugador1.attack(Jugador2);
+                                     if (Jugador2.getLife() > 0)
+                                        {
+                                            Jugador2.attack(Jugador1);
+                                        }
+                                        else
+                                        {
+
+                                            Jugadores.remove(Jugador2);
+
+                                        }
+                                }
+                                else
+                                {
+                                    
+                                    Jugadores.remove(Jugador1);
+                                    
+                                }
+                                
+                               
+                                
+                                
+                                
+                            }
+                            catch(MiExcepcion ex)
+                            {
+
+                                ex.printStackTrace();
+                                
+                            }
+                            
+                            
+                        }
+                        if (Jugadores.size() < 2 || Jugadores.size() == 0)
+                        {
+                            
+                            continuar = false;
+                            System.out.println("");
+                            System.out.println("");
+                            System.out.println("");
+                            System.out.println("El jugador " + Jugadores.get(0).getName() + " ha ganado.");
+                            
+                            
+                            
+                        }
+                        
+                        
+                    }
+                    
+                    
+                    
+
+                    }
+                    while(!entrada.equals("") || continuar != false); 
+                    if (continuar == false)
+                    {
+                        
+                        break;
+                        
+                    }
                     
 
                     

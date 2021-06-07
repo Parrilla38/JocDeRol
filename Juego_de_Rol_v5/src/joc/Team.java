@@ -27,29 +27,10 @@ public class Team {
     }
     
     
-    public void add(Player p) throws MiExcepcion
+    public void add(Player p) throws JugadorRepetidoExcep
     {
-        int contador = 0;
-        for (int i = 0; i < Jugadores.size(); i++)
-        {
-            
-            if(Jugadores.get(i).getName() == p.getName())
-            {
-                
-                contador += 1;
-                
-            }
-            
-            
-            
-        }
-        if (contador > 0)
-        {
-            
-            throw new MiExcepcion("No puede repetirse un mismo jugador en el mismo equipo.");
-            
-        }
-        else
+        
+        if(!Jugadores.contains(p))
         {
             
             p.setVeces_equipo(p.getVeces_equipo() + 1);
@@ -58,40 +39,35 @@ public class Team {
             p.add(this);
             
         }
+        else
+        {
+            
+            throw new JugadorRepetidoExcep("El jugador "+ p.getName() + " ya pertenece al equipo " + this.name);
+            
+        }
+        
+            
+            
+            
         
         
         
     }
     
-    public void remove(Player p) throws MiExcepcion
+    public void remove(Player p) throws NoPerteneceExcep
     {
         
-        
-        
-        int contador = 0;
-        for (int i = 0; i < Jugadores.size(); i++)
+        if(Jugadores.contains(p))
         {
             
-            if(Jugadores.get(i) == p)
-            {
-                
-                contador += 1;
-                
-            }
-            
-            
-            
-        }
-        if (contador == 0)
-        {
-            
-            throw new MiExcepcion("No se puede borrar un jugador que no está en el equipo.");
+            Jugadores.remove(p);
+            p.remove(this);
             
         }
         else
         {
             
-            getJugadores().remove(p);
+            throw new NoPerteneceExcep("El jugador "+ p.getName() + " no pertenece al equipo " + this.name);
             
         }
     
